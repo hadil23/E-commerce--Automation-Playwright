@@ -9,10 +9,10 @@ class LoginPage {
         this.loginButton =  page.getByRole('button',{ name:'Login'});
     }
     async open(){
-        await this.page.goto(this.baseUrl)
+        await this.page.goto(this.baseUrl);
     } ;
     async login(username , password
-
+        
     ) {
          await this.usernameInput.fill(username);
          await this.passwordInput.fill(password);

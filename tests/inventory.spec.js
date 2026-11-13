@@ -1,25 +1,15 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage'; 
 import { Inventory } from '../pages/Inventory';
 import { constants } from '../data/constants';
-import users from '../data/users';
 
-
-/** @type {LoginPage}  */
-let loginPage ; 
 
 /** @type {Inventory}  */
 let inventory ; 
 
 test.beforeEach(async ({page})=>{
-loginPage = new LoginPage(page);
+page.goto(constants.urls.inventory);
 inventory = new Inventory(page) ; 
-await loginPage.open();
-await loginPage.login(
-    users.users.standarUser.username,
-    users.users.standarUser.password
-);
 
 });
 
@@ -33,43 +23,35 @@ test('card badge updates when adding products' , async ({page})=>{
 });
 
  
-
 for (const [sortName, sortValue] of Object.entries(constants.sortOptions)) {
 
-    test(`products can be sorted by ${sortName}`, async ({ page }) => {
+    test(`products can be sorted by ${sortName}`, async () => {
 
         await inventory.sortBy(sortValue);
 
         let actual;
         let expected;
 
-        // Sort by product name
-        if (sortName === 'nameAsc' || sortName === 'nameDesc') {
+        if (sortName === 'nameAsc') {
 
             actual = await inventory.getAllProductNames();
+            expected = [...actual].sort((a, b) => a.localeCompare(b));
 
-            expected = [...actual].sort((a, b) =>
-                a.localeCompare(b)
-            );
+        } else if (sortName === 'nameDesc') {
 
-            if (sortName === 'nameDesc') {
-                expected.reverse();
-            }
-        }
+            actual = await inventory.getAllProductNames();
+            expected = [...actual].sort((a, b) => b.localeCompare(a));
 
-        // Sort by product price
-        else if (
-            sortName === 'priceLowToHigh' ||
-            sortName === 'priceHighToLow'
-        ) {
+        } else if (sortName === 'priceLowToHigh') {
 
             actual = await inventory.getAllProductPrices();
-
             expected = [...actual].sort((a, b) => a - b);
 
-            if (sortName === 'priceHighToLow') {
-                expected.reverse();
-            }
+        } else if (sortName === 'priceHighToLow') {
+
+            actual = await inventory.getAllProductPrices();
+            expected = [...actual].sort((a, b) => b - a);
+
         }
 
         expect(actual).toEqual(expected);

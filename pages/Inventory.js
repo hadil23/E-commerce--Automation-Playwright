@@ -10,7 +10,7 @@ class Inventory {
     }
 
     getProductCart(productName) {
-        return this.inventoryItems.filter({ hasText: productName });
+       return this.inventoryItems.filter({ hasText: productName });
     }
 
     async addProductToCart(productName) {

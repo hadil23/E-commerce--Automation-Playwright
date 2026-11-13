@@ -8,13 +8,11 @@ import { constants } from '../data/constants';
 let loginPage ; 
 
 
-test.beforeEach(async ({page})=>{
-loginPage = new LoginPage(page);
-await loginPage.open();
-});
 
 // test case-1 Valid scenario
 test('Login with valid credientials @smoke' ,async ({page})=>{
+ loginPage = new LoginPage(page);
+await loginPage.open();
   
   loginPage.login(users.standarUser.username ,users.standarUser.password);
   await expect(page).toHaveURL(constants.urls.inventory);
