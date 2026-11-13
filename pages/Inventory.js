@@ -6,6 +6,7 @@ class Inventory {
         this.cartBadge = page.locator('.shopping_cart_badge');
         this.sortDropDown = page.locator('.product_sort_container');
         this.itemPrices = page.locator('[data-test = "inventory-item-price"]') ;
+        this.itemNames = page.locator('[data-test ="inventory-item-name"]') ;
     }
 
     getProductCart(productName) {
@@ -30,6 +31,9 @@ class Inventory {
     async getAllProductPrices(){
         const priceTexts = await this.itemPrices.allTextContents();
         return priceTexts.map((p)=>parseFloat(p.replace('$', ''))) ;
+    };
+    async getAllProductNames(){
+      return await this.itemNames.allTextContents();
     }
 }
 

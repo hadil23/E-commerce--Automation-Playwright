@@ -31,9 +31,47 @@ test('card badge updates when adding products' , async ({page})=>{
     expect(cartCount).toBe(2);
 
 });
-test('products can be sorted by price low to high' , async({page})=>{
-    await inventory.sortBy(constants.sortOptions.priceLowToHigh);
-    const prices = await inventory.getAllProductPrices();
-    const sortedPrices = [...prices].sort((a,b)=>a-b);
-    expect(prices).toEqual(sortedPrices);
-})
+
+ 
+
+for (const [sortName, sortValue] of Object.entries(constants.sortOptions)) {
+
+    test(`products can be sorted by ${sortName}`, async ({ page }) => {
+
+        await inventory.sortBy(sortValue);
+
+        let actual;
+        let expected;
+
+        // Sort by product name
+        if (sortName === 'nameAsc' || sortName === 'nameDesc') {
+
+            actual = await inventory.getAllProductNames();
+
+            expected = [...actual].sort((a, b) =>
+                a.localeCompare(b)
+            );
+
+            if (sortName === 'nameDesc') {
+                expected.reverse();
+            }
+        }
+
+        // Sort by product price
+        else if (
+            sortName === 'priceLowToHigh' ||
+            sortName === 'priceHighToLow'
+        ) {
+
+            actual = await inventory.getAllProductPrices();
+
+            expected = [...actual].sort((a, b) => a - b);
+
+            if (sortName === 'priceHighToLow') {
+                expected.reverse();
+            }
+        }
+
+        expect(actual).toEqual(expected);
+    });
+}
