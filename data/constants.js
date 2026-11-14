@@ -3,7 +3,8 @@ module.exports = {
     urls : {
       
         login : '/' ,
-        inventory : '/inventory.html'
+        inventory : '/inventory.html',
+        cart :'/cart.html'
 
     },
     text : {
