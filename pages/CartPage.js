@@ -12,7 +12,8 @@ constructor(page){
      this.subTotal = page.locator('[data-test ="subtotal-label"]');
      this.tax = page.locator('[data-test="tax-label"]');
      this.total = page.locator('[data-test="total-label"]');
-     this.finishButton = page.getByRole('button',{name:'finish'})
+     this.finishButton = page.getByRole('button',{name:'finish'}) ; 
+     this.generatePdfButton = page.locator('button[data-test="generate-pdf-order"]');
   }
 
 
@@ -65,6 +66,9 @@ async getSubtotal(){
  }
  async clickFinishButton(){
    await this.finishButton.click();
+ }
+ async generatePDFOrder(){
+   await this.generatePdfButton.click();
  }
 
 
