@@ -4,7 +4,9 @@ module.exports = {
       
         login : '/' ,
         inventory : '/inventory.html',
-        cart :'/cart.html'
+        cart :'/cart.html',
+        checkout2url :'/checkout-step-two.html',
+        thankuPageUrl :'/checkout-complete.html'
 
     },
     text : {
@@ -18,6 +20,11 @@ module.exports = {
         priceLowToHigh : 'lohi',
         priceHighToLow :'hilo'
 
+    },
+    checkoutData : {
+        firstName : 'Hadil',
+        lastName : 'Afi',
+        postalCode : '2083'
     }
 
 }
